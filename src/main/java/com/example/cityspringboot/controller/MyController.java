@@ -1,7 +1,6 @@
 package com.example.cityspringboot.controller;
 
 import com.example.cityspringboot.bean.City;
-import com.example.cityspringboot.bean.CityForm;
 import com.example.cityspringboot.service.ICityService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,8 @@ public class MyController {
     @RequestMapping(value = { "/addCity" }, method = RequestMethod.GET)
     public String showAddCityPage(Model model) {
  
-        CityForm cityForm = new CityForm();
-        model.addAttribute("cityForm", cityForm);
+        City city = new City();
+        model.addAttribute("city", city);
  
         return "addCity";
     }
@@ -41,10 +40,10 @@ public class MyController {
     
     
     @RequestMapping(value = { "/addCity" }, method = RequestMethod.POST)
-    public String saveCity(Model model, @ModelAttribute("cityForm") CityForm cityForm) {
+    public String saveCity(Model model, @ModelAttribute("city") City city) {
  
-    	String name = cityForm.getName();
-        int population = cityForm.getPopulation();
+    	String name = city.getName();
+        int population = city.getPopulation();
  
         if (name != null && name.length() > 0 && population >0) {
             City newCity = new City(name, population);
@@ -58,8 +57,8 @@ public class MyController {
     @RequestMapping(value = {"/delCity"}, method = RequestMethod.GET)
     public String showDelCityPage(Model model) {
     	
-    	CityForm cityForm = new CityForm();
-    	model.addAttribute("cityForm", cityForm);
+    	City city = new City();
+    	model.addAttribute("city", city);
     	
     	return "delCity";
     }
@@ -67,9 +66,9 @@ public class MyController {
     
     
     @RequestMapping(value = {"/delCity"}, method = RequestMethod.POST)
-    public String showDelCityPage(Model model, @ModelAttribute("cityForm") CityForm cityForm) {
+    public String showDelCityPage(Model model, @ModelAttribute("city") City city) {
     	
-    	long id = cityForm.getId();
+    	long id = city.getId();
     	cityService.deleteById(id);
     	
     	return "redirect:/showCities";
@@ -80,8 +79,8 @@ public class MyController {
     @RequestMapping(value = { "/updateCity" }, method = RequestMethod.GET)
     public String showUpdateCityPage(Model model) {
  
-        CityForm cityForm = new CityForm();
-        model.addAttribute("cityForm", cityForm);
+        City city = new City();
+        model.addAttribute("city", city);
  
         return "updateCity";
     }
@@ -89,11 +88,11 @@ public class MyController {
     
     
     @RequestMapping(value = { "/updateCity" }, method = RequestMethod.POST)
-    public String updateCity(Model model, @ModelAttribute("cityForm") CityForm cityForm) {
+    public String updateCity(Model model, @ModelAttribute("city") City city) {
  
-    	long id = cityForm.getId();
-    	String name = cityForm.getName();
-        int population = cityForm.getPopulation();
+    	long id = city.getId();
+    	String name = city.getName();
+        int population = city.getPopulation();
  
         if (name != null && name.length() > 0 && population >0 && id > 0) {
             cityService.updateById(id, name, population);

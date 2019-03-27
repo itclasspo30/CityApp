@@ -8,7 +8,7 @@
    <body>
       <h1>Delete City:</h1>
           
-      <form th:action="@{/delCity}" th:object="${cityForm}" method="POST">
+      <form th:action="@{/delCity}" th:object="${city}" method="POST">
          
          city ID:
          <input type="number" th:field="*{id}" />    

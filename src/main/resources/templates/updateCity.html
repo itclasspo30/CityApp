@@ -8,7 +8,7 @@
    <body>
       <h1>Add City:</h1>
           
-      <form th:action="@{/updateCity}" th:object="${cityForm}" method="POST">
+      <form th:action="@{/updateCity}" th:object="${city}" method="POST">
          
          city ID:
          <input type="number" th:field="*{id}" />    

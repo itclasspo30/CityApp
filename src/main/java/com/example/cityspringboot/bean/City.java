@@ -1,6 +1,7 @@
 package com.example.cityspringboot.bean;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +14,13 @@ public class City {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
     private long id;
     
+    @Column(name = "city_name")
     private String name;
+    
+    @Column(name = "population")
     private int population;
 
     public City() {
