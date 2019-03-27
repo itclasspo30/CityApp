@@ -36,6 +36,7 @@ public class CityService implements ICityService {
     	
     	repository.deleteById(id);
     	return "redirect:/showCities";
+    	
     }
     
     
