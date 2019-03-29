@@ -6,16 +6,24 @@
       <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
    </head>
    <body>
-      <h1>Delete City:</h1>
+      <h1>Delete Trip:</h1>
           
-      <form th:action="@{/delCity}" th:object="${city}" method="POST">
-         
-         city ID:
-         <input type="number" th:field="*{id}" />    
-         <br/>
+      <form th:action="@{/delTrip}" th:object="${trip}" method="POST">
+      
+      <table>
+             <tr>
+                 <td>
+                     Trip ID:
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{id}" /> 
+                 </td>
+             </tr>
+      </table>
+      <br/>
          <input type="submit" value="Delete" />
       </form>
-      
+      <br/>
       <form>
          <button formaction="index.html">Back</button>
       </form>

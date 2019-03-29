@@ -6,15 +6,15 @@
       <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
    </head>
    <body>
-      <h1>Create City:</h1>
+      <h1>Create Transport:</h1>
           
-      <form th:action="@{/addCity}" th:object="${city}" method="POST">
+      <form th:action="@{/addTransport}" th:object="${transport}" method="POST">
          
          Name:
          <input type="text" th:field="*{name}" />    
          <br/>
-         Population:
-         <input type="number" th:field="*{population}" />     
+         Seats:
+         <input type="number" th:field="*{seats}" />     
          <br/>
          <input type="submit" value="Create" />
       </form>
@@ -29,7 +29,7 @@
       </div>
       
       <form>
-      <button formaction="index.html">Back</button>
+      <button formaction="index.html">Home</button>
       </form>
        
    </body>

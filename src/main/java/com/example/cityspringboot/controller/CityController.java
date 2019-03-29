@@ -2,7 +2,11 @@ package com.example.cityspringboot.controller;
 
 import com.example.cityspringboot.bean.City;
 import com.example.cityspringboot.service.ICityService;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MyController {
+public class CityController {
     
     @Autowired
     ICityService cityService;
@@ -19,8 +23,13 @@ public class MyController {
         
     @RequestMapping("/showCities")
     public String findCities(Model model) {
-        
-        List<City> cities = (List<City>) cityService.findAll();
+    	
+    	List<Map<String, Object>> mapedCities = (List<Map<String, Object>>) cityService.findAll();
+    	List<City> cities = new ArrayList<City>();
+    	
+    	for (Map<String, Object> mapedCity : mapedCities) {
+    		cities.add(new City((int)mapedCity.get("city_id"), (String)mapedCity.get("city_name"), (int)mapedCity.get("population")));
+    	}
         model.addAttribute("cities", cities);
         
         return "showCities";

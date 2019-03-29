@@ -1,11 +1,15 @@
 package com.example.cityspringboot.bean;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,13 +19,16 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
-    private long id;
+    private int id;
     
     @Column(name = "city_name")
     private String name;
     
     @Column(name = "population")
     private int population;
+    
+    @OneToMany(mappedBy = "city")
+    List<Trip> trips = new ArrayList<>();
 
     public City() {
     }
@@ -31,12 +38,28 @@ public class City {
         this.name = name;
         this.population = population;
     }
+    
+    public City(int id, String name, int population) {
+        
+        this.id = id;
+	    this.name = name;
+        this.population = population;
+    }
+    
+    public void addTrip(Trip trip) {
+        trip.setCity(this);
+        trips.add(trip);
+    }
 
-    public long getId() {
+    public void remove(Trip trip) {
+        trips.remove(trip);
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

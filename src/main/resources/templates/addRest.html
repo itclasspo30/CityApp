@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Add Page</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Create Rest:</h1>
+          
+      <form th:action="@{/addRest}" th:object="${rest}" method="POST">
+         
+         <table>
+             <tr>
+                 <td>
+                     Enter Person Name:
+                 </td>
+                 <td>
+                     <input type="text" th:field="*{personName}" /> 
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     Enter Trip ID:
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{tripID}" />
+                 </td>
+             </tr>
+             
+         </table>
+         <br/>
+         <input type="submit" value="Create" />
+      </form>
+       
+      <br/>
+       
+      <!-- Check if errorMessage is not null and not empty -->
+       
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+      
+      <form>
+      <button formaction="index.html">Home</button>
+      </form>
+       
+   </body>
+</html>

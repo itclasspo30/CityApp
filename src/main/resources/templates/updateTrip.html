@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Update Page</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Update Trip By ID:</h1>
+          
+      <form th:action="@{/updateTrip}" th:object="${trip}" method="POST">
+         
+         <table>
+             <tr>
+                 <td>
+                     Trip ID to Update:<hr />
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{id}" /><hr />
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     Name:
+                 </td>
+                 <td>
+                     <input type="text" th:field="*{name}" /> 
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     City ID:
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{cityID}" />
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     Transport ID:
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{transportID}" />  
+                 </td>
+             </tr>
+         </table>
+         <br/>
+         <input type="submit" value="Update" />
+      </form>
+      <br/>
+      <form>
+          <button formaction="index.html">Back</button>
+      </form>
+       
+      <!-- Check if errorMessage is not null and not empty -->
+       
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+       
+   </body>
+</html>

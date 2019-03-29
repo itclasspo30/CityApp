@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Cities</title>
+        <title>Trips</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     
     <body>
-        <h2>List of cities</h2>
+        <h2>List of Trips</h2>
 
         <table>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>City</th>
+                <th>Transport</th>
             </tr>
             
-            <tr th:each="city : ${cities}">
-                <td th:text="${city.id}">Id</td>
-                <td th:text="${city.name}">Name</td>
-                <td th:text="${city.population}">Population</td>
+            <tr th:each="trip : ${trips}">
+                <td th:text="${trip.id}">Id</td>
+                <td th:text="${trip.name}">Name</td>
+                <td th:text="${trip.cityName}">City</td>
+                <td th:text="${trip.transportName}">Transport</td>
             </tr>
         </table>
                 
         <form>
             <button formaction="index.html">Home</button>
         </form>
+
     </body>
 </html>

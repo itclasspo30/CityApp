@@ -6,7 +6,7 @@
       <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
    </head>
    <body>
-      <h1>Add City:</h1>
+      <h1>Update City By ID:</h1>
           
       <form th:action="@{/updateCity}" th:object="${city}" method="POST">
          
@@ -23,6 +23,10 @@
       </form>
        
       <br/>
+      
+      <form>
+          <button formaction="index.html">Back</button>
+      </form>
        
       <!-- Check if errorMessage is not null and not empty -->
        

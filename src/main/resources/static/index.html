@@ -6,10 +6,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-       
-        <a href="showCities">Show cities</a>
-        <a href="addCity">Add City</a>
-        <a href="delCity">Del City</a>
-        <a href="updateCity">Update City</a>
+    <table BORDER=1 CELLPADDING=10>
+        <tr>
+        <td>
+        <h3>City:</h3>
+        <form>
+            <button formaction="addCity">CREATE</button>
+            <button formaction="showCities">READ</button>
+            <button formaction="updateCity">UPDATE</button>
+            <button formaction="delCity">DELETE</button>
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <h3>Transport:</h3>
+        <form>
+            <button formaction="addTransport">CREATE</button>
+            <button formaction="showTransport">READ</button>
+            <button formaction="updateTransport">UPDATE</button>
+            <button formaction="delTransport">DELETE</button>
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <h3>Trips:</h3>
+        <form>
+            <button formaction="addTrip">CREATE</button>
+            <button formaction="showTrips">READ</button>
+            <button formaction="updateTrip">UPDATE</button>
+            <button formaction="delTrip">DELETE</button>
+        </form>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <h3>Person rest:</h3>
+        <form>
+            <button formaction="addRest">CREATE</button>
+            <button formaction="showRest">READ</button>
+            <button formaction="updateRest">UPDATE</button>
+            <button formaction="delRest">DELETE</button>
+        </form>
+        </td>
+        </tr>
+    </table>    
     </body>
 </html>

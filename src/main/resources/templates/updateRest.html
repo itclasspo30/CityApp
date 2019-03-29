@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Update Page</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Update Rest By ID:</h1>
+          
+      <form th:action="@{/updateRest}" th:object="${rest}" method="POST">
+         
+         <table>
+             <tr>
+                 <td>
+                     Rest ID to Update:<hr />
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{id}" /><hr />
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     Person Name:
+                 </td>
+                 <td>
+                     <input type="text" th:field="*{personName}" /> 
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     Trip ID:
+                 </td>
+                 <td>
+                     <input type="number" th:field="*{tripID}" />
+                 </td>
+             </tr>
+             
+         </table>
+         <br/>
+         <input type="submit" value="Update" />
+      </form>
+      <br/>
+      <form>
+          <button formaction="index.html">Home</button>
+      </form>
+       
+      <!-- Check if errorMessage is not null and not empty -->
+       
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+       
+   </body>
+</html>
