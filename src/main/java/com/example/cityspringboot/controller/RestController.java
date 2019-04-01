@@ -1,13 +1,7 @@
 package com.example.cityspringboot.controller;
 
-
 import com.example.cityspringboot.bean.Rest;
-import com.example.cityspringboot.service.IRestService;
-import com.example.cityspringboot.service.ITripService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.example.cityspringboot.service.IMainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,25 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RestController {  
     
+
     @Autowired
-    ITripService tripService;
-    @Autowired
-    IRestService restService;
+    IMainService<Rest> restService;
     
-        
+    
     @RequestMapping("/showRest")
     public String findRest(Model model) {
-    	
-    	List<Map<String, Object>> mapedRest = (List<Map<String, Object>>) restService.findAll();
-    	List<Rest> restList = new ArrayList<Rest>();
-    	
-    	for (Map<String, Object> mapedSingleRest : mapedRest) {    		
-    		String tripName = tripService.findNameById((int)mapedSingleRest.get("trip_id"));
-    		Rest newRest = new Rest((int)mapedSingleRest.get("rest_id"), (String)mapedSingleRest.get("person_name"), tripName);
-    		restList.add(newRest);
-    	}
-    	
-        model.addAttribute("restList", restList);
+        model.addAttribute("restList", restService.findAll());
         return "showRest";
     }
     
@@ -61,7 +44,7 @@ public class RestController {
         int tripID = rest.getTripID();
  
         if (personName != null && personName.length() > 0 && tripID >0) {
-            restService.addRest(personName, tripID);
+            restService.addNew(new Rest(personName, tripID));
         }
         return "redirect:/showRest";
     }
@@ -108,8 +91,8 @@ public class RestController {
     	String personName = rest.getPersonName();
         int tripID = rest.getTripID();
  
-        if (personName != null && personName.length() > 0 && tripID >0) {
-            restService.updateById(id, personName, tripID);
+        if (personName != null && personName.length() > 0 && tripID >0 &&id >0) {
+            restService.updateById(rest);
         }
         return "redirect:/showRest";
     

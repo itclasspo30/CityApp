@@ -1,5 +1,6 @@
 package com.example.cityspringboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,38 +8,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.example.cityspringboot.bean.Rest;
+import com.example.cityspringboot.bean.Trip;
+
 @Service
-public class RestService implements IRestService {
+public class RestService implements IMainService<Rest> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
+    @Autowired
+    IMainService<Trip> tripService;
 
+    
+    
     @Override
-    public List<Map<String, Object>> findAll() {
-        return jdbcTemplate.queryForList("SELECT * FROM person_rest ORDER BY rest_id");
+    public String findNameById(int id) {
+    	Map<String, Object> targetMap = jdbcTemplate.queryForMap("SELECT * FROM person_rest WHERE rest_id = ?", id);
+    	String targetName = (String) targetMap.get("person_name");
+        return targetName;
+    }
+    
+    
+    
+    @Override
+    public List<Rest> findAll() {
+    	
+    	List<Map<String, Object>> mapedRest = jdbcTemplate.queryForList("SELECT * FROM person_rest ORDER BY rest_id");
+    	List<Rest> restList = new ArrayList<Rest>();
+    	
+    	for (Map<String, Object> mapedSingleRest : mapedRest) {    		
+    		String tripName = tripService.findNameById((int)mapedSingleRest.get("trip_id"));
+    		Rest newRest = new Rest((int)mapedSingleRest.get("rest_id"), (String)mapedSingleRest.get("person_name"), tripName);
+    		restList.add(newRest);
+    	}
+        return restList;
     }
     
    
     @Override
-    public String addRest(String personName, int tripID) {
-    	jdbcTemplate.update("INSERT INTO person_rest (person_name, trip_id) VALUES (?, ?)", personName, tripID);
-    	return "redirect:/showRest";
+    public Rest addNew(Rest newRest) {
+    	jdbcTemplate.update("INSERT INTO person_rest (person_name, trip_id) VALUES (?, ?)", newRest.getPersonName(), newRest.getTripID());
+    	return newRest;
     }
     
     
     @Override
-    public String deleteById(long id) {
+    public long deleteById(long id) {
     	jdbcTemplate.update("DELETE FROM person_rest WHERE rest_id = ?", id);
-    	return "redirect:/showRest";
+    	return id;
     }
     
     
     @Override
-    public String updateById(long id, String personName, int tripID) {
-    	
-    	jdbcTemplate.update("UPDATE person_rest SET person_name = ?, trip_id = ? WHERE rest_id = ?", personName, tripID, id);
-    	return "redirect:/showTrips";
+    public int updateById(Rest rest) {
+    	return jdbcTemplate.update("UPDATE person_rest SET person_name = ?, trip_id = ? WHERE rest_id = ?", rest.getPersonName(), rest.getTripID(), rest.getId());
     }
     
 }

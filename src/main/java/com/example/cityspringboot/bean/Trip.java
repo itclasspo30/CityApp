@@ -52,6 +52,12 @@ public class Trip {
 		this.transport = transport;
 	}
 	
+	public Trip (String name, int cityID, int transportID) {
+		this.name = name;
+		this.cityID = cityID;
+		this.transportID = transportID;
+	}
+	
 	public Trip (int id, String name, String cityName, String transportName) {
 		this.id = id;
 		this.name = name;

@@ -1,6 +1,8 @@
 package com.example.cityspringboot.service;
 
 import com.example.cityspringboot.bean.City;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CityService implements ICityService {
+public class CityService implements IMainService<City> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -24,29 +26,36 @@ public class CityService implements ICityService {
     
     
     @Override
-    public List<Map<String, Object>> findAll() {
-        return jdbcTemplate.queryForList("SELECT * FROM cities ORDER BY city_id");
+    public List<City> findAll() {
+    	List<City> cities = new ArrayList<City>();
+    	List<Map<String, Object>> mapedCities = jdbcTemplate.queryForList("SELECT * FROM cities ORDER BY city_id");
+    	for (Map<String, Object> mapedCity : mapedCities) {
+    		cities.add(new City((int)mapedCity.get("city_id"), (String)mapedCity.get("city_name"), (int)mapedCity.get("population")));
+    	}
+        return cities;
     }
     
     
     @Override
-    public String addCity(City newCity) {
+    public City addNew(City newCity) {
     	jdbcTemplate.update("INSERT INTO cities (city_name, population) VALUES (?, ?)", newCity.getName(), newCity.getPopulation());
-    	return "redirect:/showCities";
+    	return newCity;
     }
     
     
     @Override
-    public String deleteById(long id) {
+    public long deleteById(long id) {
     	jdbcTemplate.update("DELETE FROM cities WHERE city_id = ?", id);
-    	return "redirect:/showCities";
+    	return id;
     }
     
     
     @Override
-    public String updateById(long id, String name, int population) {
-    	jdbcTemplate.update("UPDATE cities SET city_name = ?, population = ? WHERE city_id = ?", name, population, id);
-    	return "redirect:/showCities";
+    public int updateById(City city) {
+    	return jdbcTemplate.update("UPDATE cities SET city_name = ?, population = ? WHERE city_id = ?", city.getName(), city.getPopulation(), city.getId());
     }
+    
+    
+    
     
 }

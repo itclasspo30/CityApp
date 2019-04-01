@@ -41,6 +41,11 @@ public class Rest {
 		this.personName = personName;
 		this.tripName = tripName;
 	}
+	
+	public Rest(String personName, int tripID) {
+		this.personName = personName;
+		this.tripID = tripID;
+	}
 
 
 

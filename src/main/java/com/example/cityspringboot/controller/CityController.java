@@ -1,11 +1,7 @@
 package com.example.cityspringboot.controller;
 
 import com.example.cityspringboot.bean.City;
-import com.example.cityspringboot.service.ICityService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.example.cityspringboot.service.IMainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,20 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class CityController {
     
     @Autowired
-    ICityService cityService;
+    IMainService<City> cityService;
     
         
     @RequestMapping("/showCities")
     public String findCities(Model model) {
-    	
-    	List<Map<String, Object>> mapedCities = (List<Map<String, Object>>) cityService.findAll();
-    	List<City> cities = new ArrayList<City>();
-    	
-    	for (Map<String, Object> mapedCity : mapedCities) {
-    		cities.add(new City((int)mapedCity.get("city_id"), (String)mapedCity.get("city_name"), (int)mapedCity.get("population")));
-    	}
-        model.addAttribute("cities", cities);
-        
+        model.addAttribute("cities", cityService.findAll());
         return "showCities";
     }
     
@@ -56,7 +44,7 @@ public class CityController {
  
         if (name != null && name.length() > 0 && population >0) {
             City newCity = new City(name, population);
-            cityService.addCity(newCity);
+            cityService.addNew(newCity);
         }
         return "redirect:/showCities";
     }
@@ -104,11 +92,10 @@ public class CityController {
         int population = city.getPopulation();
  
         if (name != null && name.length() > 0 && population >0 && id > 0) {
-            cityService.updateById(id, name, population);
+        	cityService.updateById(city);
         }
         return "redirect:/showCities";
     
     }
     
 }
-

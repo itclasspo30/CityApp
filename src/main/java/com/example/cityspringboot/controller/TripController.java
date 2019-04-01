@@ -2,13 +2,7 @@ package com.example.cityspringboot.controller;
 
 
 import com.example.cityspringboot.bean.Trip;
-import com.example.cityspringboot.service.ICityService;
-import com.example.cityspringboot.service.ITransportService;
-import com.example.cityspringboot.service.ITripService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.example.cityspringboot.service.IMainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,34 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TripController {  
     
     @Autowired
-    ITripService tripService;
-    @Autowired
-    ICityService sityService;
-    @Autowired
-    ITransportService transportService;
-    
+    IMainService<Trip> tripService;
+        
         
     @RequestMapping("/showTrips")
     public String findCities(Model model) {
-    	
-    	List<Map<String, Object>> mapedTrips = (List<Map<String, Object>>) tripService.findAll();
-    	List<Trip> trips = new ArrayList<Trip>();
-    	
-    	for (Map<String, Object> mapedTrip : mapedTrips) {
-    		String cityName = sityService.findNameById((int)mapedTrip.get("city_id"));
-    		String transportName = transportService.findNameById((int)mapedTrip.get("transport_id"));
-    		Trip newTrip = new Trip((int)mapedTrip.get("trip_id"), (String)mapedTrip.get("trip_name"), cityName, transportName);
-    		trips.add(newTrip);
-    	}	
-    	
-    	/*
-    	//---Checking the List---
-    	for (Trip trip : trips) {
-    		System.out.println(trip.toString());
-    	}
-    	*/   	
-    	
-        model.addAttribute("trips", trips);
+        model.addAttribute("trips", tripService.findAll());
         return "showTrips";
     }
     
@@ -72,8 +44,8 @@ public class TripController {
         int cityID = trip.getCityID();
         int transportID = trip.getTransportID();
  
-        if (name != null && name.length() > 0 && cityID >0 && transportID>0) {
-            tripService.addTrip(name, cityID, transportID);
+        if (name != null && name.length() > 0 && cityID >0 && transportID >0) {
+            tripService.addNew(new Trip(name, cityID, transportID));
         }
         return "redirect:/showTrips";
     }
@@ -121,8 +93,8 @@ public class TripController {
         int cityID = trip.getCityID();
         int transportID = trip.getTransportID();
  
-        if (name != null && name.length() > 0 && cityID >0 && transportID>0) {
-            tripService.updateById(id, name, cityID, transportID);
+        if (name != null && name.length() > 0 && cityID >0 && transportID>0 && id >0) {
+            tripService.updateById(trip);
         }
         return "redirect:/showTrips";
     

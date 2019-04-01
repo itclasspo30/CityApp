@@ -1,5 +1,6 @@
 package com.example.cityspringboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.example.cityspringboot.bean.City;
+import com.example.cityspringboot.bean.Transport;
+import com.example.cityspringboot.bean.Trip;
+
 @Service
-public class TripService implements ITripService {
+public class TripService implements IMainService<Trip> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    IMainService<City> sityService;
+    @Autowired
+    IMainService<Transport> transportService;
     
     
     @Override
@@ -23,30 +32,37 @@ public class TripService implements ITripService {
     
 
     @Override
-    public List<Map<String, Object>> findAll() {
-        return jdbcTemplate.queryForList("SELECT * FROM trips ORDER BY trip_id");
+    public List<Trip> findAll() {
+        List<Map<String, Object>> mapedTrips = jdbcTemplate.queryForList("SELECT * FROM trips ORDER BY trip_id");
+    	List<Trip> trips = new ArrayList<Trip>();
+    	
+    	for (Map<String, Object> mapedTrip : mapedTrips) {
+    		String cityName = sityService.findNameById((int)mapedTrip.get("city_id"));
+    		String transportName = transportService.findNameById((int)mapedTrip.get("transport_id"));
+    		Trip newTrip = new Trip((int)mapedTrip.get("trip_id"), (String)mapedTrip.get("trip_name"), cityName, transportName);
+    		trips.add(newTrip);
+    	}	
+    	return trips;
     }
     
    
     @Override
-    public String addTrip(String name, int cityID, int transportID) {
-    	jdbcTemplate.update("INSERT INTO trips (trip_name, city_id, transport_id) VALUES (?, ?, ?)", name, cityID, transportID);
-    	return "redirect:/showTrips";
+    public Trip addNew(Trip newTrip) {
+    	jdbcTemplate.update("INSERT INTO trips (trip_name, city_id, transport_id) VALUES (?, ?, ?)", newTrip.getName(), newTrip.getCityID(), newTrip.getTransportID());
+    	return newTrip;
     }
     
     
     @Override
-    public String deleteById(long id) {
+    public long deleteById(long id) {
     	jdbcTemplate.update("DELETE FROM trips WHERE trip_id = ?", id);
-    	return "redirect:/showTrips";
+    	return id;
     }
     
     
     @Override
-    public String updateById(long id, String name, int cityID, int transportID) {
-    	
-    	jdbcTemplate.update("UPDATE trips SET trip_name = ?, city_id = ?, transport_id = ? WHERE trip_id = ?", name, cityID, transportID, id);
-    	return "redirect:/showTrips";
+    public int updateById(Trip trip) {
+    	return jdbcTemplate.update("UPDATE trips SET trip_name = ?, city_id = ?, transport_id = ? WHERE trip_id = ?", trip.getName(), trip.getCityID(), trip.getTransportID(), trip.getId());
     }
     
 }

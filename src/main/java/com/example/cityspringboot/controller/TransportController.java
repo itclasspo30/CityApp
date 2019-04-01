@@ -1,12 +1,7 @@
 package com.example.cityspringboot.controller;
 
-
 import com.example.cityspringboot.bean.Transport;
-import com.example.cityspringboot.service.ITransportService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.example.cityspringboot.service.IMainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,20 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TransportController {
     
     @Autowired
-    ITransportService transportService;
+    IMainService<Transport> transportService;
     
         
     @RequestMapping("/showTransport")
     public String findCities(Model model) {
-    	
-    	List<Map<String, Object>> mapedTransport = (List<Map<String, Object>>) transportService.findAll();
-    	List<Transport> transport = new ArrayList<Transport>();
-    	
-    	for (Map<String, Object> mapedTr : mapedTransport) {
-    		transport.add(new Transport((int)mapedTr.get("transport_id"), (String)mapedTr.get("transport_name"), (int)mapedTr.get("seats")));
-    	}	
-        model.addAttribute("transport", transport);
-        
+        model.addAttribute("transport", transportService.findAll());
         return "showTransport";
     }
     
@@ -57,7 +44,7 @@ public class TransportController {
  
         if (name != null && name.length() > 0 && seats >0) {
             Transport newTransport = new Transport(name, seats);
-            transportService.addTransport(newTransport);
+            transportService.addNew(newTransport);
         }
         return "redirect:/showTransport";
     }
@@ -105,7 +92,7 @@ public class TransportController {
         int seats = transport.getSeats();
  
         if (name != null && name.length() > 0 && seats >0 && id > 0) {
-            transportService.updateById(id, name, seats);
+            transportService.updateById(transport);
         }
         return "redirect:/showTransport";
     
