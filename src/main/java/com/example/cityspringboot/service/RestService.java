@@ -12,14 +12,13 @@ import com.example.cityspringboot.bean.Rest;
 import com.example.cityspringboot.bean.Trip;
 
 @Service
-public class RestService implements IMainService<Rest> {
+public class RestService implements IWorkBaseService<Rest> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    IMainService<Trip> tripService;
+    IWorkBaseService<Trip> tripService;
 
-    
     
     @Override
     public String findNameById(int id) {

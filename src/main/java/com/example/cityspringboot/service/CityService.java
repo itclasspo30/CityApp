@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CityService implements IMainService<City> {
+public class CityService implements IWorkBaseService<City> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;

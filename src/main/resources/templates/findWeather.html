@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Searching Page</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Searching Weather Items:</h1>
+          
+      <form th:action="@{/findWeather}" th:object="${weather}" method="POST">
+      
+      <table>
+             <tr>
+                 <td>
+                     Weather Item Date:
+                 </td>
+                 <td>
+                     <input type="date" th:field="*{date}" /> 
+                 </td>
+             </tr>
+      </table>
+      <br/>
+         <input type="submit" value="Search" />
+      </form>
+      <br/>
+      <form>
+         <button formaction="index.html">Home</button>
+      </form>
+            
+      <br/>
+      
+      <table>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Temperature</th>
+            </tr>
+            
+            <tr th:each="item : ${weatherList}">
+                <td th:text="${item.id}">Id</td>
+                <td th:text="${item.date}">Date</td>
+                <td th:text="${item.temp}">Temperature</td>
+            </tr>
+        </table>
+       
+   </body>
+</html>

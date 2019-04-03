@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Update Page</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Update City By ID:</h1>
+          
+      <form th:action="@{/updateWeather}" th:object="${weather}" method="POST">
+      
+      <table>
+             <tr>
+                 <td>
+                 Item ID:
+                 </td>
+                 <td>
+                 <input type="number" th:field="*{id}" />
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                 Date:
+                 </td>
+                 <td>
+                 <input type="date" th:field="*{date}" /> 
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                 Temperature:
+                 </td>
+                 <td>
+                 <input type="number" step="0.1" th:field="*{temp}" />  
+                 </td>
+             </tr>
+             
+      </table>
+         <br/>
+         <input type="submit" value="Update" />
+      </form>
+       
+      <br/>
+      
+      <form>
+          <button formaction="index.html">Home</button>
+      </form>
+       
+      <!-- Check if errorMessage is not null and not empty -->
+       
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+       
+   </body>
+</html>

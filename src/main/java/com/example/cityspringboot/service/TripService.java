@@ -13,14 +13,14 @@ import com.example.cityspringboot.bean.Transport;
 import com.example.cityspringboot.bean.Trip;
 
 @Service
-public class TripService implements IMainService<Trip> {
+public class TripService implements IWorkBaseService<Trip> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    IMainService<City> sityService;
+    IWorkBaseService<City> sityService;
     @Autowired
-    IMainService<Transport> transportService;
+    IWorkBaseService<Transport> transportService;
     
     
     @Override

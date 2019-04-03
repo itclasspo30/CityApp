@@ -6,16 +6,16 @@
       <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
    </head>
    <body>
-      <h1>Delete City:</h1>
+      <h1>Delete Weather Item:</h1>
           
-      <form th:action="@{/delCity}" th:object="${city}" method="POST">
+      <form th:action="@{/delWeather}" th:object="${weather}" method="POST">
          
-         city ID:
+         Item ID:
          <input type="number" th:field="*{id}" />    
          <br/>
          <input type="submit" value="Delete" />
       </form>
-      
+      <br/>
       <form>
          <button formaction="index.html">Home</button>
       </form>

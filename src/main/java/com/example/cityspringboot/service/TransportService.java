@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransportService implements IMainService<Transport> {
+public class TransportService implements IWorkBaseService<Transport> {
 	
     @Autowired
     private JdbcTemplate jdbcTemplate;
