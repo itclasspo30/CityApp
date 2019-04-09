@@ -1,6 +1,7 @@
 package com.example.cityspringboot.bean;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CITIES")
-public class City {
+public class City implements Serializable{
     
-    @Id
+    
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
     private int id;
@@ -26,7 +30,7 @@ public class City {
     
     @Column(name = "population")
     private int population;
-    
+   
     @OneToMany(mappedBy = "city")
     List<Trip> trips = new ArrayList<>();
 
@@ -45,7 +49,7 @@ public class City {
 	    this.name = name;
         this.population = population;
     }
-    
+   
     public void addTrip(Trip trip) {
         trip.setCity(this);
         trips.add(trip);
