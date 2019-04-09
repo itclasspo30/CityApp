@@ -14,7 +14,7 @@ public class RabbitAddCityListener {
 	@Autowired
 	IMainService<City> cityService;
 	
-    static final Logger logger = LoggerFactory.getLogger(RabbitListener.class);
+    static final Logger logger = LoggerFactory.getLogger(RabbitAddCityListener.class);
  
     @RabbitListener(queues = "myQueue")
     public void process(City city){
